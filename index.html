@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Homework: Hospital & Insurance Vocabulary | 5 Practice Tasks</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #eef5f9;
+            color: #1a2c3e;
+            padding: 20px;
+        }
+        .hw-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .hw-header {
+            background: #1e6f5c;
+            color: white;
+            border-radius: 32px 32px 0 0;
+            padding: 24px 32px;
+        }
+        .hw-header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        .hw-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 6px;
+        }
+        .hw-card {
+            background: white;
+            border-radius: 0 0 32px 32px;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.12);
+            padding: 32px;
+            margin-bottom: 28px;
+        }
+        .hw-card h2 {
+            color: #1e6f5c;
+            font-size: 1.5rem;
+            border-left: 6px solid #289672;
+            padding-left: 18px;
+            margin-bottom: 20px;
+        }
+        .hw-card h3 {
+            color: #2c5a6e;
+            font-size: 1.15rem;
+            margin: 20px 0 12px 0;
+        }
+        .task-box {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            border: 1px solid #e2e8f0;
+        }
+        .task-box:last-child {
+            margin-bottom: 0;
+        }
+        .task-label {
+            display: inline-block;
+            background: #2c7da0;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 3px 14px;
+            border-radius: 40px;
+            margin-bottom: 12px;
+            letter-spacing: 0.3px;
+        }
+        .task-box p {
+            margin: 8px 0;
+        }
+        .task-box ul,
+        .task-box ol {
+            margin-left: 22px;
+            margin-top: 8px;
+        }
+        .task-box li {
+            margin-bottom: 10px;
+        }
+
+        /* Vocabulary list styles */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 24px;
+            margin: 16px 0;
+            padding: 16px;
+            background: #fef9e6;
+            border-radius: 20px;
+            border: 1px solid #e8dcc8;
+        }
+        .vocab-grid .vocab-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px dashed #e2dccd;
+        }
+        .vocab-grid .vocab-row:last-child {
+            border-bottom: none;
+        }
+        .vocab-grid .en {
+            font-weight: 600;
+            color: #1e4a6b;
+        }
+        .vocab-grid .ru {
+            color: #5f7f8c;
+        }
+        .vocab-section {
+            margin-top: 12px;
+        }
+        .vocab-section h4 {
+            color: #1e6f5c;
+            margin: 16px 0 8px 0;
+            font-size: 1.05rem;
+        }
+
+        /* Interactive styles - no drag & drop */
+        .question-block {
+            background: white;
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin: 12px 0;
+            border: 1px solid #e2e8f0;
+        }
+        .question-block .q-text {
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+        .select-options {
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            background: white;
+            min-width: 160px;
+        }
+        .inline-input {
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            width: 200px;
+            max-width: 100%;
+        }
+        .btn {
+            background: #2c7da0;
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            margin-top: 10px;
+            margin-right: 8px;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 0.9rem;
+        }
+        .btn:hover {
+            background: #1f5e7a;
+            transform: scale(0.97);
+        }
+        .btn-reset {
+            background: #6c7a89;
+        }
+        .btn-reset:hover {
+            background: #55616e;
+        }
+
+        .feedback-msg {
+            margin-top: 14px;
+            padding: 12px 16px;
+            border-radius: 18px;
+            display: none;
+        }
+        .feedback-correct {
+            background: #d4edda;
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+        .feedback-wrong {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 5px solid #dc3545;
+        }
+
+        .score-badge {
+            background: #2c7da0;
+            color: white;
+            border-radius: 60px;
+            padding: 3px 14px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        .answer-key {
+            background: #eaf6f0;
+            border-radius: 16px;
+            padding: 12px 18px;
+            margin-top: 12px;
+            display: none;
+            border-left: 4px solid #1e6f5c;
+        }
+        .answer-key.show {
+            display: block;
+        }
+
+        .match-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 30px;
+            margin: 12px 0;
+        }
+        .match-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .match-item .term {
+            font-weight: 600;
+            min-width: 100px;
+        }
+
+        @media (max-width: 700px) {
+            .hw-card {
+                padding: 20px;
+            }
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+            .match-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hw-container">
+
+        <!-- HEADER -->
+        <div class="hw-header">
+            <h1>📚 Homework: Hospital &amp; Insurance Vocabulary</h1>
+            <p>5 practice tasks to review all the words from our lesson. Complete them and check your answers.</p>
+        </div>
+
+        <div class="hw-card">
+
+            <!-- ====== VOCABULARY INTRODUCTION ====== -->
+            <h2>📖 Vocabulary: English – Russian</h2>
+            <div class="task-box" style="background: #fef7e0; border-color: #e2dccd;">
+                <p style="font-weight: 600; margin-bottom: 12px;">Study these words before doing the tasks.</p>
+
+                <!-- Insurance Terms -->
+                <div class="vocab-section">
+                    <h4>🛡️ Insurance &amp; Hospital Terms</h4>
+                    <div class="vocab-grid">
+                        <div class="vocab-row"><span class="en">co-payment</span><span class="ru">доплата</span></div>
+                        <div class="vocab-row"><span class="en">emergency room (ER)</span><span class="ru">отделение неотложной помощи / приемный покой</span></div>
+                        <div class="vocab-row"><span class="en">deductible</span><span class="ru">вычитаемая сумма</span></div>
+                        <div class="vocab-row"><span class="en">referral</span><span class="ru">направление к специалисту</span></div>
+                        <div class="vocab-row"><span class="en">claim form</span><span class="ru">заявление на возмещение / бланк претензии</span></div>
+                        <div class="vocab-row"><span class="en">health coverage</span><span class="ru">страховое покрытие</span></div>
+                        <div class="vocab-row"><span class="en">inpatient</span><span class="ru">стационарный пациент</span></div>
+                        <div class="vocab-row"><span class="en">outpatient</span><span class="ru">амбулаторный пациент</span></div>
+                        <div class="vocab-row"><span class="en">prescription</span><span class="ru">рецепт</span></div>
+                        <div class="vocab-row"><span class="en">medical history</span><span class="ru">история болезни / анамнез</span></div>
+                    </div>
+                </div>
+
+                <!-- Symptoms & Conditions -->
+                <div class="vocab-section">
+                    <h4>🤒 Symptoms &amp; Conditions</h4>
+                    <div class="vocab-grid">
+                        <div class="vocab-row"><span class="en">fever</span><span class="ru">температура / жар</span></div>
+                        <div class="vocab-row"><span class="en">headache</span><span class="ru">головная боль</span></div>
+                        <div class="vocab-row"><span class="en">sore throat</span><span class="ru">боль в горле</span></div>
+                        <div class="vocab-row"><span class="en">cough</span><span class="ru">кашель</span></div>
+                        <div class="vocab-row"><span class="en">nausea</span><span class="ru">тошнота</span></div>
+                        <div class="vocab-row"><span class="en">fatigue</span><span class="ru">слабость / усталость</span></div>
+                        <div class="vocab-row"><span class="en">fainting</span><span class="ru">обморок</span></div>
+                        <div class="vocab-row"><span class="en">shortness of breath</span><span class="ru">одышка / затрудненное дыхание</span></div>
+                        <div class="vocab-row"><span class="en">chest pain</span><span class="ru">боль в груди</span></div>
+                        <div class="vocab-row"><span class="en">rash</span><span class="ru">сыпь</span></div>
+                        <div class="vocab-row"><span class="en">diarrhea</span><span class="ru">диарея / понос</span></div>
+                        <div class="vocab-row"><span class="en">dizziness</span><span class="ru">головокружение</span></div>
+                        <div class="vocab-row"><span class="en">rotavirus</span><span class="ru">ротавирус</span></div>
+                        <div class="vocab-row"><span class="en">phlegm / mucus</span><span class="ru">мокрота / слизь</span></div>
+                    </div>
+                </div>
+
+                <!-- Body Parts -->
+                <div class="vocab-section">
+                    <h4>🧍 Body Parts</h4>
+                    <div class="vocab-grid">
+                        <div class="vocab-row"><span class="en">head</span><span class="ru">голова</span></div>
+                        <div class="vocab-row"><span class="en">throat</span><span class="ru">горло</span></div>
+                        <div class="vocab-row"><span class="en">chest</span><span class="ru">грудь</span></div>
+                        <div class="vocab-row"><span class="en">stomach</span><span class="ru">желудок</span></div>
+                        <div class="vocab-row"><span class="en">arm</span><span class="ru">рука (от плеча до кисти)</span></div>
+                        <div class="vocab-row"><span class="en">leg</span><span class="ru">нога (от бедра до стопы)</span></div>
+                        <div class="vocab-row"><span class="en">skin</span><span class="ru">кожа</span></div>
+                        <div class="vocab-row"><span class="en">lungs</span><span class="ru">легкие</span></div>
+                        <div class="vocab-row"><span class="en">foot</span><span class="ru">стопа</span></div>
+                        <div class="vocab-row"><span class="en">ankle</span><span class="ru">лодыжка / щиколотка</span></div>
+                        <div class="vocab-row"><span class="en">calf</span><span class="ru">икра (ноги)</span></div>
+                        <div class="vocab-row"><span class="en">thigh</span><span class="ru">бедро</span></div>
+                        <div class="vocab-row"><span class="en">hip</span><span class="ru">бедро / тазобедренный сустав</span></div>
+                        <div class="vocab-row"><span class="en">palm</span><span class="ru">ладонь</span></div>
+                        <div class="vocab-row"><span class="en">wrist</span><span class="ru">запястье</span></div>
+                        <div class="vocab-row"><span class="en">forearm</span><span class="ru">предплечье</span></div>
+                        <div class="vocab-row"><span class="en">shoulder</span><span class="ru">плечо</span></div>
+                    </div>
+                </div>
+
+                <!-- Tests & Procedures -->
+                <div class="vocab-section">
+                    <h4>🔬 Tests &amp; Procedures</h4>
+                    <div class="vocab-grid">
+                        <div class="vocab-row"><span class="en">blood test</span><span class="ru">анализ крови</span></div>
+                        <div class="vocab-row"><span class="en">urine test</span><span class="ru">анализ мочи</span></div>
+                        <div class="vocab-row"><span class="en">stool test / fecal test</span><span class="ru">анализ кала</span></div>
+                        <div class="vocab-row"><span class="en">X-ray</span><span class="ru">рентген</span></div>
+                        <div class="vocab-row"><span class="en">CT scan</span><span class="ru">КТ (компьютерная томография)</span></div>
+                        <div class="vocab-row"><span class="en">ultrasound</span><span class="ru">ультразвук / УЗИ</span></div>
+                        <div class="vocab-row"><span class="en">biopsy</span><span class="ru">биопсия</span></div>
+                    </div>
+                </div>
+                <p style="font-size: 0.85rem; margin-top: 12px;">✨ Use these words in the practice tasks below!</p>
+            </div>
+
+            <!-- ====== TASK 1: Match Insurance Terms (Dropdown) ====== -->
+            <h2>Task 1: Match Insurance Terms</h2>
+            <div class="task-box">
+                <span class="task-label">Dropdown selection</span>
+                <p><strong>Instructions:</strong> Choose the correct term for each definition from the dropdown menu.</p>
+                <div id="hwTask1Content"></div>
+                <div style="margin-top: 16px;">
+                    <button class="btn btn-reset" id="hwReset1">⟳ Reset</button>
+                    <button class="btn" id="hwCheck1">✅ Check</button>
+                </div>
+                <div id="hwFeedback1" class="feedback-msg"></div>
+                <div id="hwAnswer1" class="answer-key"></div>
+            </div>
+
+            <!-- ====== TASK 2: Match Symptoms (Dropdown) ====== -->
+            <h2>Task 2: Match Symptoms</h2>
+            <div class="task-box">
+                <span class="task-label">Dropdown selection</span>
+                <p><strong>Instructions:</strong> Choose the correct symptom for each description from the dropdown menu.</p>
+                <div id="hwTask2Content"></div>
+                <div style="margin-top: 16px;">
+                    <button class="btn btn-reset" id="hwReset2">⟳ Reset</button>
+                    <button class="btn" id="hwCheck2">✅ Check</button>
+                </div>
+                <div id="hwFeedback2" class="feedback-msg"></div>
+                <div id="hwAnswer2" class="answer-key"></div>
+            </div>
+
+            <!-- ====== TASK 3: Fill in the Blanks (Dropdown) ====== -->
+            <h2>Task 3: Fill in the Blanks</h2>
+            <div class="task-box">
+                <span class="task-label">Dropdown selection</span>
+                <p><strong>Instructions:</strong> Choose the correct word from the dropdown to complete each sentence.</p>
+                <div id="hwTask3Content"></div>
+                <div style="margin-top: 16px;">
+                    <button class="btn btn-reset" id="hwReset3">⟳ Reset</button>
+                    <button class="btn" id="hwCheck3">✅ Check</button>
+                </div>
+                <div id="hwFeedback3" class="feedback-msg"></div>
+                <div id="hwAnswer3" class="answer-key"></div>
+            </div>
+
+            <!-- ====== TASK 4: Multiple Choice ====== -->
+            <h2>Task 4: Choose the Correct Word</h2>
+            <div class="task-box">
+                <span class="task-label">Multiple Choice</span>
+                <p><strong>Instructions:</strong> Choose the best word to complete each sentence.</p>
+                <div id="hwTask4Content"></div>
+                <div style="margin-top: 16px;">
+                    <button class="btn btn-reset" id="hwReset4">⟳ Reset</button>
+                    <button class="btn" id="hwCheck4">✅ Check</button>
+                </div>
+                <div id="hwFeedback4" class="feedback-msg"></div>
+                <div id="hwAnswer4" class="answer-key"></div>
+            </div>
+
+            <!-- ====== TASK 5: Categorise (Dropdown) ====== -->
+            <h2>Task 5: Categorise – Insurance or Symptom?</h2>
+            <div class="task-box">
+                <span class="task-label">Dropdown selection</span>
+                <p><strong>Instructions:</strong> For each word, select whether it belongs to <strong>Insurance</strong> or <strong>Symptom</strong> category.</p>
+                <div id="hwTask5Content"></div>
+                <div style="margin-top: 16px;">
+                    <button class="btn btn-reset" id="hwReset5">⟳ Reset</button>
+                    <button class="btn" id="hwCheck5">✅ Check</button>
+                </div>
+                <div id="hwFeedback5" class="feedback-msg"></div>
+                <div id="hwAnswer5" class="answer-key"></div>
+            </div>
+
+        </div><!-- /hw-card -->
+
+        <footer style="text-align: center; font-size: 0.85rem; color: #5f7f8c; padding: 16px 0;">
+            🏥 B1+ English: Hospital &amp; Insurance — Homework Practice
+        </footer>
+    </div>
+
+    <script>
+        // -------- SHUFFLE HELPER --------
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // ============================================================
+        // TASK 1: Insurance Terms (Dropdown) – 5 pairs
+        // ============================================================
+        const insData = [
+            { word: "co-payment", def: "Fixed amount you pay for a medical service" },
+            { word: "deductible", def: "Amount you pay before insurance starts covering costs" },
+            { word: "referral", def: "Doctor's note to see a specialist" },
+            { word: "claim form", def: "Form you submit to request insurance reimbursement" },
+            { word: "inpatient", def: "Patient who stays overnight in hospital" }
+        ];
+        let insSelections = [];
+
+        function renderTask1() {
+            const container = document.getElementById('hwTask1Content');
+            if (!container) return;
+            container.innerHTML = '';
+            const shuffledDefs = shuffleArray([...insData]);
+            insSelections = shuffledDefs.map((item, idx) => {
+                const selId = `insSel${idx}`;
+                const div = document.createElement('div');
+                div.className = 'question-block';
+                const allWords = insData.map(i => i.word);
+                div.innerHTML = `
+                    <div class="q-text">📌 ${item.def}</div>
+                    <select id="${selId}" class="select-options">
+                        <option value="">-- choose term --</option>
+                        ${allWords.map(w => `<option value="${w}">${w}</option>`).join('')}
+                    </select>
+                `;
+                container.appendChild(div);
+                return { idx, correct: item.word, selected: '' };
+            });
+            insSelections.forEach((s, idx) => {
+                const sel = document.getElementById(`insSel${idx}`);
+                if (sel) {
+                    sel.addEventListener('change', () => {
+                        insSelections[idx].selected = sel.value;
+                    });
+                }
+            });
+        }
+
+        function resetTask1() {
+            renderTask1();
+            document.getElementById('hwFeedback1').style.display = 'none';
+            document.getElementById('hwAnswer1').classList.remove('show');
+        }
+
+        function checkTask1() {
+            let correct = 0;
+            insSelections.forEach(s => { if (s.selected === s.correct) correct++; });
+            const fb = document.getElementById('hwFeedback1');
+            fb.style.display = 'block';
+            if (correct === insData.length) {
+                fb.className = 'feedback-msg feedback-correct';
+                fb.innerHTML = '🎉 Perfect! All insurance terms matched correctly.';
+            } else {
+                fb.className = 'feedback-msg feedback-wrong';
+                fb.innerHTML = `⚠️ You got ${correct}/${insData.length} correct. Review: co-payment (fixed fee), deductible (pay before insurance), referral (specialist note), claim form (reimbursement), inpatient (overnight stay).`;
+            }
+            const ak = document.getElementById('hwAnswer1');
+            ak.classList.add('show');
+            ak.innerHTML = `<strong>Answers:</strong><br>${insData.map((item, idx) => `${idx+1}. ${item.word} → ${item.def}`).join('<br>')}`;
+        }
+        renderTask1();
+        document.getElementById('hwReset1').onclick = resetTask1;
+        document.getElementById('hwCheck1').onclick = checkTask1;
+
+        // ============================================================
+        // TASK 2: Symptoms (Dropdown) – 5 pairs
+        // ============================================================
+        const symData = [
+            { word: "fever", def: "A high body temperature, often a sign of infection" },
+            { word: "headache", def: "Pain in the head" },
+            { word: "sore throat", def: "Pain in the throat, often when swallowing" },
+            { word: "cough", def: "A cough, often with mucus or phlegm" },
+            { word: "nausea", def: "Feeling that you might vomit" }
+        ];
+        let symSelections = [];
+
+        function renderTask2() {
+            const container = document.getElementById('hwTask2Content');
+            if (!container) return;
+            container.innerHTML = '';
+            const shuffledDefs = shuffleArray([...symData]);
+            symSelections = shuffledDefs.map((item, idx) => {
+                const selId = `symSel${idx}`;
+                const div = document.createElement('div');
+                div.className = 'question-block';
+                const allWords = symData.map(i => i.word);
+                div.innerHTML = `
+                    <div class="q-text">📌 ${item.def}</div>
+                    <select id="${selId}" class="select-options">
+                        <option value="">-- choose symptom --</option>
+                        ${allWords.map(w => `<option value="${w}">${w}</option>`).join('')}
+                    </select>
+                `;
+                container.appendChild(div);
+                return { idx, correct: item.word, selected: '' };
+            });
+            symSelections.forEach((s, idx) => {
+                const sel = document.getElementById(`symSel${idx}`);
+                if (sel) {
+                    sel.addEventListener('change', () => {
+                        symSelections[idx].selected = sel.value;
+                    });
+                }
+            });
+        }
+
+        function resetTask2() {
+            renderTask2();
+            document.getElementById('hwFeedback2').style.display = 'none';
+            document.getElementById('hwAnswer2').classList.remove('show');
+        }
+
+        function checkTask2() {
+            let correct = 0;
+            symSelections.forEach(s => { if (s.selected === s.correct) correct++; });
+            const fb = document.getElementById('hwFeedback2');
+            fb.style.display = 'block';
+            if (correct === symData.length) {
+                fb.className = 'feedback-msg feedback-correct';
+                fb.innerHTML = '🎉 Perfect! All symptoms matched correctly.';
+            } else {
+                fb.className = 'feedback-msg feedback-wrong';
+                fb.innerHTML = `⚠️ You got ${correct}/${symData.length} correct. Review: fever (high temp), headache (pain in head), sore throat (pain in throat), cough (cough with mucus), nausea (feeling you might vomit).`;
+            }
+            const ak = document.getElementById('hwAnswer2');
+            ak.classList.add('show');
+            ak.innerHTML = `<strong>Answers:</strong><br>${symData.map((item, idx) => `${idx+1}. ${item.word} → ${item.def}`).join('<br>')}`;
+        }
+        renderTask2();
+        document.getElementById('hwReset2').onclick = resetTask2;
+        document.getElementById('hwCheck2').onclick = checkTask2;
+
+        // ============================================================
+        // TASK 3: Fill in the Blanks (Dropdown) – 6 sentences
+        // ============================================================
+        const fillData = [
+            { sentence: "Before traveling, check your _______________ is valid abroad.", correct: "health coverage",
+            options: ["health coverage", "prescription", "referral"] },
+            { sentence: "The doctor gave me a _______________ for antibiotics.", correct: "prescription",
+            options: ["prescription", "deductible", "claim form"] },
+            { sentence: "After surgery, he stayed in the hospital as an _______________.", correct: "inpatient",
+            options: ["outpatient", "inpatient", "referral"] },
+            { sentence: "To get your money back, you must submit an insurance _______________.", correct: "claim form",
+            options: ["claim form", "co-payment", "medical history"] },
+            { sentence: "Before insurance pays the bill, you need to meet your annual _______________.", correct: "deductible",
+            options: ["deductible", "co-payment", "prescription"] },
+            { sentence: "I have a terrible _______________ and my head is pounding.", correct: "headache",
+            options: ["headache", "cough", "fever"] }
+        ];
+        let fillSelections = [];
+
+        function renderTask3() {
+            const container = document.getElementById('hwTask3Content');
+            if (!container) return;
+            container.innerHTML = '';
+            fillSelections = fillData.map((item, idx) => {
+                const selId = `fillSel${idx}`;
+                const div = document.createElement('div');
+                div.className = 'question-block';
+                div.innerHTML = `
+                    <div class="q-text">${idx+1}. ${item.sentence}</div>
+                    <select id="${selId}" class="select-options">
+                        <option value="">-- choose --</option>
+                        ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                    </select>
+                `;
+                container.appendChild(div);
+                return { idx, correct: item.correct, selected: '' };
+            });
+            fillSelections.forEach((s, idx) => {
+                const sel = document.getElementById(`fillSel${idx}`);
+                if (sel) {
+                    sel.addEventListener('change', () => {
+                        fillSelections[idx].selected = sel.value;
+                    });
+                }
+            });
+        }
+
+        function resetTask3() {
+            renderTask3();
+            document.getElementById('hwFeedback3').style.display = 'none';
+            document.getElementById('hwAnswer3').classList.remove('show');
+        }
+
+        function checkTask3() {
+            let correct = 0;
+            fillSelections.forEach(s => { if (s.selected === s.correct) correct++; });
+            const fb = document.getElementById('hwFeedback3');
+            fb.style.display = 'block';
+            if (correct === fillData.length) {
+                fb.className = 'feedback-msg feedback-correct';
+                fb.innerHTML = '🌟 Excellent! All sentences completed correctly.';
+            } else {
+                fb.className = 'feedback-msg feedback-wrong';
+                fb.innerHTML = `📚 You got ${correct}/${fillData.length} correct. Review the sentences and try again.`;
+            }
+            const ak = document.getElementById('hwAnswer3');
+            ak.classList.add('show');
+            ak.innerHTML = `<strong>Answers:</strong><br>${fillData.map((item, idx) => `${idx+1}. ${item.correct}`).join(' &nbsp;|&nbsp; ')}`;
+        }
+        renderTask3();
+        document.getElementById('hwReset3').onclick = resetTask3;
+        document.getElementById('hwCheck3').onclick = checkTask3;
+
+        // ============================================================
+        // TASK 4: Multiple Choice – 6 questions
+        // ============================================================
+        const mcData = [
+            { q: "The __________ is the amount you pay before insurance covers the rest.", options: ["deductible", "co-payment",
+                    "referral"
+                ], correct: "deductible" },
+            { q: "If you have a __________, you should rest and drink plenty of fluids.", options: ["fever", "rash",
+                    "fainting"
+                ], correct: "fever" },
+            { q: "A __________ is a doctor's order for medication.", options: ["prescription", "claim form",
+                    "referral"], correct: "prescription" },
+            { q: "Feeling __________ can be a sign of food poisoning or motion sickness.", options: ["nausea", "fatigue",
+                    "chest pain"
+                ], correct: "nausea" },
+            { q: "To see a specialist, you usually need a __________ from your GP.", options: ["referral", "deductible",
+                    "health coverage"
+                ], correct: "referral" },
+            { q: "A __________ is a skin reaction that can be itchy and red.", options: ["rash", "cough",
+                    "sore throat"], correct: "rash" }
+        ];
+        let mcSelections = [];
+
+        function renderTask4() {
+            const container = document.getElementById('hwTask4Content');
+            if (!container) return;
+            container.innerHTML = '';
+            mcSelections = mcData.map((item, idx) => {
+                const selId = `mcSel${idx}`;
+                const div = document.createElement('div');
+                div.className = 'question-block';
+                div.innerHTML = `
+                    <div class="q-text">${idx+1}. ${item.q}</div>
+                    <select id="${selId}" class="select-options">
+                        <option value="">-- select --</option>
+                        ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                    </select>
+                `;
+                container.appendChild(div);
+                return { idx, correct: item.correct, selected: '' };
+            });
+            mcSelections.forEach((s, idx) => {
+                const sel = document.getElementById(`mcSel${idx}`);
+                if (sel) {
+                    sel.addEventListener('change', () => {
+                        mcSelections[idx].selected = sel.value;
+                    });
+                }
+            });
+        }
+
+        function resetTask4() {
+            renderTask4();
+            document.getElementById('hwFeedback4').style.display = 'none';
+            document.getElementById('hwAnswer4').classList.remove('show');
+        }
+
+        function checkTask4() {
+            let correct = 0;
+            mcSelections.forEach(s => { if (s.selected === s.correct) correct++; });
+            const fb = document.getElementById('hwFeedback4');
+            fb.style.display = 'block';
+            if (correct === mcData.length) {
+                fb.className = 'feedback-msg feedback-correct';
+                fb.innerHTML = '🏆 Perfect! All multiple choice answers are correct.';
+            } else {
+                fb.className = 'feedback-msg feedback-wrong';
+                fb.innerHTML = `✅ You got ${correct}/${mcData.length} correct. Review the terms and try again.`;
+            }
+            const ak = document.getElementById('hwAnswer4');
+            ak.classList.add('show');
+            ak.innerHTML = `<strong>Answers:</strong><br>${mcData.map((item, idx) => `${idx+1}. ${item.correct}`).join(' &nbsp;|&nbsp; ')}`;
+        }
+        renderTask4();
+        document.getElementById('hwReset4').onclick = resetTask4;
+        document.getElementById('hwCheck4').onclick = checkTask4;
+
+        // ============================================================
+        // TASK 5: Categorise (Dropdown) – 8 words
+        // ============================================================
+        const catData = [
+            { word: "co-payment", correct: "Insurance" },
+            { word: "deductible", correct: "Insurance" },
+            { word: "referral", correct: "Insurance" },
+            { word: "claim form", correct: "Insurance" },
+            { word: "fever", correct: "Symptom" },
+            { word: "headache", correct: "Symptom" },
+            { word: "cough", correct: "Symptom" },
+            { word: "nausea", correct: "Symptom" }
+        ];
+        let catSelections = [];
+
+        function renderTask5() {
+            const container = document.getElementById('hwTask5Content');
+            if (!container) return;
+            container.innerHTML = '';
+            const shuffled = shuffleArray([...catData]);
+            catSelections = shuffled.map((item, idx) => {
+                const selId = `catSel${idx}`;
+                const div = document.createElement('div');
+                div.className = 'question-block';
+                div.innerHTML = `
+                    <div class="q-text">${item.word}</div>
+                    <select id="${selId}" class="select-options">
+                        <option value="">-- choose category --</option>
+                        <option value="Insurance">🛡️ Insurance</option>
+                        <option value="Symptom">🤒 Symptom</option>
+                    </select>
+                `;
+                container.appendChild(div);
+                return { idx, correct: item.correct, selected: '' };
+            });
+            catSelections.forEach((s, idx) => {
+                const sel = document.getElementById(`catSel${idx}`);
+                if (sel) {
+                    sel.addEventListener('change', () => {
+                        catSelections[idx].selected = sel.value;
+                    });
+                }
+            });
+        }
+
+        function resetTask5() {
+            renderTask5();
+            document.getElementById('hwFeedback5').style.display = 'none';
+            document.getElementById('hwAnswer5').classList.remove('show');
+        }
+
+        function checkTask5() {
+            let correct = 0;
+            catSelections.forEach(s => { if (s.selected === s.correct) correct++; });
+            const fb = document.getElementById('hwFeedback5');
+            fb.style.display = 'block';
+            if (correct === catData.length) {
+                fb.className = 'feedback-msg feedback-correct';
+                fb.innerHTML = '🎉 Perfect! All words categorised correctly.';
+            } else {
+                fb.className = 'feedback-msg feedback-wrong';
+                fb.innerHTML = `⚠️ You got ${correct}/${catData.length} correct. Insurance: co-payment, deductible, referral, claim form. Symptoms: fever, headache, cough, nausea.`;
+            }
+            const ak = document.getElementById('hwAnswer5');
+            ak.classList.add('show');
+            ak.innerHTML = `<strong>Answers:</strong><br>${catData.map((item, idx) => `${item.word} → ${item.correct}`).join('<br>')}`;
+        }
+        renderTask5();
+        document.getElementById('hwReset5').onclick = resetTask5;
+        document.getElementById('hwCheck5').onclick = checkTask5;
+    </script>
+</body>
+</html>
